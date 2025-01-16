@@ -62,12 +62,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BangumiAPI\Subject.cs" />
+    <Compile Include="BangumiAPI\User.cs" />
     <Compile Include="CommonHelper.cs" />
     <Compile Include="ConfigBase.cs" />
     <Compile Include="AppConfig.cs" />
     <Compile Include="FunctionResult.cs" />
     <Compile Include="MainSave.cs" />
     <Compile Include="Models.cs" />
+    <Compile Include="Models\SubjectAlias.cs" />
+    <Compile Include="Models\SubjectType.cs" />
+    <Compile Include="Models\UserAPIKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,5 +84,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

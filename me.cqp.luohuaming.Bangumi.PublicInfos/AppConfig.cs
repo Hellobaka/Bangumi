@@ -15,7 +15,7 @@ namespace me.cqp.luohuaming.Bangumi.PublicInfos
         public static AppConfig Instance { get; private set; }
 
         public static List<UserAPIKey> APIKeys { get; set; } = [];
-        
+
         public static List<SubjectAlias> SubjectAliases { get; set; } = [];
 
         public static bool EnableNSFW { get; set; }
