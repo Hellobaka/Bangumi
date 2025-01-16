@@ -1,16 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
-using me.cqp.luohuaming.Bangumi.Sdk.Cqp.Model;
 
 namespace me.cqp.luohuaming.Bangumi.PublicInfos
 {
     public static class CommonHelper
     {
+        public const string BaseUrl = "https://api.bgm.tv/";
+
         /// <summary>
         /// 获取时间戳
         /// </summary>
@@ -20,7 +19,6 @@ namespace me.cqp.luohuaming.Bangumi.PublicInfos
             TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return Convert.ToInt64(ts.TotalSeconds);
         }
-
 
         public static string GetAppImageDirectory()
         {
@@ -68,6 +66,49 @@ namespace me.cqp.luohuaming.Bangumi.PublicInfos
                 }
             }
             return false;
+        }
+
+        public static string? Get(string url, string token)
+        {
+            try
+            {
+                url = BaseUrl + url;
+                using HttpClient client = new();
+                var request = new HttpRequestMessage(new HttpMethod("GET"), url);
+                request.Headers.Add("Authorization", $"Bearer {token}");
+
+                HttpResponseMessage response = client.SendAsync(request).Result;
+                response.EnsureSuccessStatusCode();
+                return response.Content.ReadAsStringAsync().Result;
+            }
+            catch (Exception ex)
+            {
+                MainSave.CQLog.Error("发送请求", url + "\n" + ex.Message + ex.StackTrace);
+                return null;
+            }
+        }
+
+        public static string? Post(string method, string url, string payload, string token)
+        {
+            try
+            {
+                url = BaseUrl + url;
+                using HttpClient client = new();
+                var request = new HttpRequestMessage(new HttpMethod(method), url)
+                {
+                    Content = new StringContent(payload, Encoding.UTF8, "application/json")
+                };
+                request.Headers.Add("Authorization", $"Bearer {token}");
+
+                HttpResponseMessage response = client.SendAsync(request).Result;
+                response.EnsureSuccessStatusCode();
+                return response.Content.ReadAsStringAsync().Result;
+            }
+            catch (Exception ex)
+            {
+                MainSave.CQLog.Error("发送请求", url + "\n" + $"Payload: {payload}\n" + ex.Message + ex.StackTrace);
+                return null;
+            }
         }
     }
 }
