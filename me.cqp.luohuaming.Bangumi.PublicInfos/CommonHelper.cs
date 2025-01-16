@@ -70,6 +70,7 @@ namespace me.cqp.luohuaming.Bangumi.PublicInfos
 
         public static string? Get(string url, string token)
         {
+            string result = "";
             try
             {
                 url = BaseUrl + url;
@@ -78,18 +79,20 @@ namespace me.cqp.luohuaming.Bangumi.PublicInfos
                 request.Headers.Add("Authorization", $"Bearer {token}");
 
                 HttpResponseMessage response = client.SendAsync(request).Result;
+                result = response.Content.ReadAsStringAsync().Result;
                 response.EnsureSuccessStatusCode();
-                return response.Content.ReadAsStringAsync().Result;
+                return result;
             }
             catch (Exception ex)
             {
-                MainSave.CQLog.Error("发送请求", url + "\n" + ex.Message + ex.StackTrace);
+                MainSave.CQLog.Error("发送请求", url + "\n" + result + "\n" + ex.Message + ex.StackTrace);
                 return null;
             }
         }
 
         public static string? Post(string method, string url, string payload, string token)
         {
+            string result = "";
             try
             {
                 url = BaseUrl + url;
@@ -101,12 +104,13 @@ namespace me.cqp.luohuaming.Bangumi.PublicInfos
                 request.Headers.Add("Authorization", $"Bearer {token}");
 
                 HttpResponseMessage response = client.SendAsync(request).Result;
+                result = response.Content.ReadAsStringAsync().Result;
                 response.EnsureSuccessStatusCode();
-                return response.Content.ReadAsStringAsync().Result;
+                return result;
             }
             catch (Exception ex)
             {
-                MainSave.CQLog.Error("发送请求", url + "\n" + $"Payload: {payload}\n" + ex.Message + ex.StackTrace);
+                MainSave.CQLog.Error("发送请求", url + "\n" + $"Payload: {payload}\n{result}\n" + ex.Message + ex.StackTrace);
                 return null;
             }
         }

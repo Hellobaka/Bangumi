@@ -36,7 +36,7 @@ namespace me.cqp.luohuaming.Bangumi.PublicInfos.Models
         public string Large { get; set; }
 
         [JsonProperty(PropertyName = "common")]
-        public string Common { get; set; }
+        public string? Common { get; set; }
 
         [JsonProperty(PropertyName = "medium")]
         public string Medium { get; set; }
